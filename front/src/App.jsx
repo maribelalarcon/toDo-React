@@ -13,7 +13,9 @@ function App() {
   const [date, setDate] = useState(null);
 
   async function getTasks() {
-    const backendResponse = await fetch("http://localhost:8081/tasks");
+    const backendResponse = await fetch(
+      `${import.meta.env.VITE_API_URL}/tasks`
+    );
     const taskFromBackend = await backendResponse.json();
     setTasks(taskFromBackend);
   }
@@ -25,7 +27,7 @@ function App() {
       date: date ? date.toISOString() : null,
     };
 
-    const response = await fetch(`http://localhost:8081/tasks/`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -40,7 +42,7 @@ function App() {
   }
 
   const onEditTask = async (updatedTask) => {
-    await fetch(`http://localhost:8081/tasks/${updatedTask._id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/tasks/${updatedTask._id}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
@@ -58,9 +60,12 @@ function App() {
 
   const onDeleteTask = async (taskId) => {
     try {
-      const response = await fetch(`http://localhost:8081/tasks/${taskId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/tasks/${taskId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         // se borro correctamente
@@ -79,7 +84,7 @@ function App() {
       const task = tasks.find((task) => {
         return task._id === taskId;
       });
-      await fetch(`http://localhost:8081/tasks/${taskId}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/tasks/${taskId}`, {
         method: "PATCH",
         headers: {
           Accept: "application/json",
