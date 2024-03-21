@@ -11,6 +11,10 @@ mongoose.connect(
 app.use(express.json());
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the tasks API");
+  return;
+});
 app.use("/tasks", taskRouter);
 
 app.listen(8081, () => {
